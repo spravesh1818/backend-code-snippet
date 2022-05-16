@@ -1,21 +1,22 @@
-import { Request } from 'express';
+import { Request } from "express";
 
-import { http } from './network.utils';
-import authConfig from '../../Config/auth.config';
-import UnauthorizedError from '../common/exceptions/UnauthorizedError';
+import { http } from "./network.utils";
+import authConfig from "../../Config/auth.config";
+import UnauthorizedError from "../common/exceptions/UnauthorizedError";
+import AuthError from "common/exceptions/AuthError";
 
 const getAuthToken = (authorization: string | undefined, authType: string) => {
-    const authComponents = authorization && authorization.split(' ');
+  const authComponents = authorization && authorization.split(" ");
 
-    if (
-        authComponents &&
-        authComponents[0] === authType &&
-        authComponents[1] !== undefined
-    ) {
-        return authComponents[1];
-    }
+  if (
+    authComponents &&
+    authComponents[0] === authType &&
+    authComponents[1] !== undefined
+  ) {
+    return authComponents[1];
+  }
 
-    return;
+  return AuthError("Auth token not found");
 };
 
 /**
@@ -24,32 +25,32 @@ const getAuthToken = (authorization: string | undefined, authType: string) => {
  * @param {Request} req
  */
 const getTokenFromHeaders = (req: Request) => {
-    const {
-        headers: { authorization },
-    } = req;
+  const {
+    headers: { authorization },
+  } = req;
 
-    const authToken = getAuthToken(authorization, 'Bearer');
+  const authToken = getAuthToken(authorization, "Bearer");
 
-    if (!authToken) {
-        throw new UnauthorizedError('No authorization token');
-    }
+  if (!authToken) {
+    throw new UnauthorizedError("No authorization token");
+  }
 
-    return authToken;
+  return authToken;
 };
 
 export function fetchUserByToken(token: string) {
-    const userAuthUrl = `${authConfig.url}/userinfo`;
+  const userAuthUrl = `${authConfig.url}/userinfo`;
 
-    return http
-        .get(userAuthUrl, {
-            headers: {
-                accessToken: token,
-                clientId: authConfig.clientId,
-            },
-        })
-        .then((response: any) => {
-            return response.data;
-        });
+  return http
+    .get(userAuthUrl, {
+      headers: {
+        accessToken: token,
+        clientId: authConfig.clientId,
+      },
+    })
+    .then((response: any) => {
+      return response.data;
+    });
 }
 
 /**
@@ -57,12 +58,12 @@ export function fetchUserByToken(token: string) {
  *
  */
 export async function validateUser(req: Request): Promise<object> {
-    const token = getTokenFromHeaders(req);
+  const token = getTokenFromHeaders(req);
 
-    const user = await fetchUserByToken(token);
-    if (!user) {
-        throw new UnauthorizedError('No user information token');
-    }
+  const user = await fetchUserByToken(token);
+  if (!user) {
+    throw new UnauthorizedError("No user information token");
+  }
 
-    return user;
+  return user;
 }

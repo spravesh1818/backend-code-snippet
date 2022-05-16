@@ -3,9 +3,10 @@ import { Response, NextFunction } from "express";
 import { validateUser } from "../../utils/auth.utils";
 import { AuthenticatedRequest } from "../../common/interfaces/AuthRequest";
 import UnauthorizedError from "../../common/exceptions/UnauthorizedError";
+import BadRequestError from "common/exceptions/BadRequestError";
 export async function authenticateRequest(
   req: AuthenticatedRequest,
-  res: Response,
+  _: Response,
   next: NextFunction
 ) {
   try {
@@ -26,6 +27,6 @@ export async function authenticateRequest(
       return next();
     }
   } catch (err) {
-    next(err);
+    throw BadRequestError("Authentication failed");
   }
 }

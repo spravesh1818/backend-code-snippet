@@ -2,8 +2,9 @@ import { StatusCodes } from "http-status-codes";
 import { Request, Response, NextFunction } from "express";
 
 import * as userService from "../services/user.service";
+import BadRequestError from "common/exceptions/BadRequestError";
 
-export async function addUser(req: Request, res: Response, next: NextFunction) {
+export async function addUser(req: Request, res: Response) {
   try {
     const response = await userService.insertUser(req.body);
 
@@ -13,15 +14,11 @@ export async function addUser(req: Request, res: Response, next: NextFunction) {
       data: response,
     });
   } catch (err) {
-    next(err);
+    throw BadRequestError("User could not be created");
   }
 }
 
-export async function getUsers(
-  _req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function getUsers(_: Request, res: Response) {
   try {
     const response = await userService.getUsers();
 
@@ -30,6 +27,6 @@ export async function getUsers(
       data: response,
     });
   } catch (err) {
-    next(err);
+    throw BadRequestError("Users could not be fetched");
   }
 }

@@ -2,10 +2,10 @@ import { StatusCodes } from "http-status-codes";
 
 import Error from "./Error";
 
-class BadRequestError extends Error {
+class AuthError extends Error {
   constructor(message: string) {
-    super(message, StatusCodes.BAD_REQUEST);
+    super(message, StatusCodes.NOT_FOUND);
   }
 }
 
-export default BadRequestError;
+export default AuthError;

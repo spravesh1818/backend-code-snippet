@@ -1,4 +1,4 @@
-import { iUserPayload } from "../src/common/dto/user.dto";
+import { UserPayload } from "../src/common/dto/user.dto";
 import * as userService from "../src/core/services/user.service";
 
 describe("Testing users", () => {
@@ -8,12 +8,12 @@ describe("Testing users", () => {
   });
 
   test("Add a user", () => {
-    const userData: iUserPayload = {
+    const userData: UserPayload = {
       name: "Pravesh Chapagain",
       email: "spravesh1818@gmail.com",
     };
 
     const workflowResponse = userService.insertUser(userData);
-    expect(workflowResponse).toBeInstanceOf(iUserPayload);
+    expect(workflowResponse).toBeInstanceOf(UserPayload);
   });
 });

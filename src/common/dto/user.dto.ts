@@ -1,13 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export interface iUserPayload {
-    _id?: string;
-    data: {
-        name: string;
-        email: string;
-    };
+export interface UserPayload {
+  _id?: string;
+  data: {
+    name: string;
+    email: string;
+  };
 }
 
-export interface iUserFilter {
-    _id?: string | mongoose.Types.ObjectId;
+export interface UserFilter {
+  _id?: string | mongoose.Types.ObjectId;
 }

@@ -3,12 +3,13 @@ import helmet from "helmet";
 import express from "express";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
+import log from "loglevel";
 
-import key from "./Config/credentials";
+import key from "./config/credentials.config";
 import routes from "./src/routes/routes";
-import appConfig from "./Config/app.configs";
-import connection from "./Config/connection.config";
-import swaggerDocs from "./Config/swagger.config";
+import appConfig from "./config/app.config";
+import connection from "./config/connection.config";
+import swaggerDocs from "./config/swagger.config";
 import genericErrorHandler from "./src/middlewares/errorHandlers/genericErrorHandler";
 
 const port = appConfig.port;
@@ -22,15 +23,15 @@ app.use(bodyParser.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/api", routes);
-console.log(`MONGO:: Connection uri: ${dbURI}`);
+log.info(`MONGO:: Connection uri: ${dbURI}`);
 
 app.use(genericErrorHandler);
 connection()
-  .then((_res) => {
-    app.listen(port, () => console.log(`Server started at port: ${port}`));
+  .then(() => {
+    app.listen(port, () => log.info(`Server started at port: ${port}`));
   })
-  .catch((err) => {
-    console.log(`MONGO:: Connection failed, err ${err}`);
+  .catch((err: any) => {
+    log.error(`MONGO:: Connection failed, err ${err}`);
   });
 
 export default app;

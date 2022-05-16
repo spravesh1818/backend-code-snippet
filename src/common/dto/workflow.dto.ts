@@ -1,19 +1,19 @@
-export interface iWorkflowPayload {
-    name: string;
-    isActive: boolean;
-    created_by: number;
-    initiators: [string];
-    stage: [iWorkflowStage];
+export interface WorkflowPayload {
+  name: string;
+  isActive: boolean;
+  created_by: number;
+  initiators: [string];
+  stage: [WorkflowStage];
 }
 
-export interface iWorkflowStage {
-    name: string;
-    description: string;
-    ordinality: number;
-    fields: [object];
+export interface WorkflowStage {
+  name: string;
+  description: string;
+  ordinality: number;
+  fields: [object];
 }
 
-export interface iWorkflowFilter {
-    _id: string;
-    single?: boolean;
+export interface WorkflowFilter {
+  _id: string;
+  single?: boolean;
 }

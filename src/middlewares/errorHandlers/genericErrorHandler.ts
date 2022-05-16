@@ -1,15 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
+import log from "loglevel";
 
-import { getErrorObject } from '../../utils/errorHandler.utils';
+import { getErrorObject } from "../../utils/errorHandler.utils";
 
 export default function genericErrorHandler(
-    err: any,
-    _req: Request,
-    res: Response,
-    _next: NextFunction
+  err: any,
+  _: Request,
+  res: Response,
+  __: NextFunction
 ): void {
-    console.log(`Generic error: ${JSON.stringify(err, undefined, 2)}`);
-    const error = getErrorObject(err);
+  log.error(`Generic error: ${JSON.stringify(err, undefined, 2)}`);
+  const error = getErrorObject(err);
 
-    res.status(error.code).json(error);
+  res.status(error.code).json(error);
 }

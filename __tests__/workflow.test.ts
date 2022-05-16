@@ -1,17 +1,15 @@
 import * as workflowService from "../src/core/services/workflow.service";
-import {
-  iWorkflowFilter,
-  iWorkflowPayload,
-} from "../src/common/dto/workflow.dto";
+import { WorkflowPayload } from "../src/common/dto/workflow.dto";
 
 describe("Testing workflow", () => {
   test("Get Workflow List", () => {
     const workflows = workflowService.getWorkflows();
+
     expect(workflows).toBeInstanceOf([]);
   });
 
   test("Add a workflow", () => {
-    const workflowData: iWorkflowPayload = {
+    const workflowData: WorkflowPayload = {
       name: "workflow 1",
       created_by: 123,
       initiators: [
@@ -54,6 +52,7 @@ describe("Testing workflow", () => {
     };
 
     const workflowResponse = workflowService.insertWorkflow(workflowData);
-    expect(workflowResponse).toBeInstanceOf(iWorkflowPayload);
+
+    expect(workflowResponse).toBeInstanceOf(WorkflowPayload);
   });
 });

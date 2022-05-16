@@ -1,8 +1,8 @@
 /**
  * Interface for api error responses.
  */
-export interface iApiErrorResponse {
-    code: number;
-    message: string;
-    data?: object;
+export interface ApiErrorResponse {
+  code: number;
+  message: string;
+  data?: object;
 }
