@@ -3,10 +3,10 @@ import {
   iWorkflowFilter,
   iWorkflowPayload,
 } from "../src/common/dto/workflow.dto";
+
 describe("Testing workflow", () => {
   test("Get Workflow List", () => {
     const workflows = workflowService.getWorkflows();
-
     expect(workflows).toBeInstanceOf([]);
   });
 
