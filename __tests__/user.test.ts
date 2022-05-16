@@ -7,7 +7,7 @@ describe("Testing users", () => {
     expect(workflows).toBeInstanceOf([]);
   });
 
-  test("Add a workflow", () => {
+  test("Add a user", () => {
     const userData: iUserPayload = {
       name: "Pravesh Chapagain",
       email: "spravesh1818@gmail.com",
